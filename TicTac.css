@@ -1,0 +1,116 @@
+html, body{
+    height: 100%;
+    margin: 0px;
+}
+
+.title {
+    background-color: blue;
+}
+
+.centered {
+    position: relative;
+    left: 20%;
+  }
+
+.small-flex-box{
+    width: 200px;
+    height: 66.66666px;
+}
+
+.big-flex-box{
+  width: 600px;  
+  height: 200px;
+}
+
+#turn-box{
+    width: 200px;
+    height: 200px;
+    display:inline-block;
+    position: fixed;
+    top:30%;
+    right: 10%;
+}
+
+#turn{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+    position: relative;
+    top: 75px;
+}
+
+#game-box{
+    background-color:lightblue;
+    width:600px; 
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    
+    /* width: 100%;
+    height: 100%; */
+    margin: 5% 20% 5% 20%;
+}
+
+#game-box-container{
+    width:800px;
+    height: 800px;
+    margin: 0px;
+}
+
+.parent-square{
+    display: inline-block;
+    /* background-color: black; */
+    border: 5px solid black;
+    width: 33.333%;
+    height: 100%;
+    
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+}
+
+.child-square{
+    display: inline-block;
+    border:2px solid blue;
+    width: 33.3%;
+    height: 100%;
+
+    margin: 0px 0px 0px 0px;
+}
+
+.available{
+    background-color: chartreuse;
+}
+
+.small-sign{
+    display: inline-block;
+    border:2px solid blue;
+    width: 33.3%;
+    height: 100%;
+    margin: 0px 0px 0px 0px;
+}
+
+.XWon{
+    background-color: crimson;
+}
+
+.OWon{
+    background-color: darkturquoise;
+}
+
+.red{
+    background-color: red;
+}
+
+.blue{
+    background-color: dodgerblue;
+}
+
+#reset-button{
+    height: 50px;
+    width: 200px;
+    position: relative;
+    bottom: 200px;
+    left: 1000px;
+    border-width: 2px;
+    border-color: black;
+    display: none;
+}

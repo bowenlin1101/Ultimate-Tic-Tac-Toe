@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title> Ultimate Tic Tac Toe</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href= "TicTac.css"
+    </head>
+
+    <body>
+        <script src="TicTac.js"></script>
+    <center>
+        <div class="container title">
+            <h1>Ultimate Tic Tac Toe</h1>
+        </div>
+    </center> 
+
+    <div id= "game-box-container" class="flex-box">
+        <div id="game-box">
+            <div class= "big-flex-box" id="brow0"></div>
+            <div class= "big-flex-box" id="brow1"></div>
+            <div class= "big-flex-box" id="brow2"></div>
+        </div>
+    </div>
+
+    <div id="turn-box" class = "red">
+        <center>
+           <b><p id = "turn">X to move</p></b>
+        </center>
+    </div>
+
+    <button id = "reset-button" onclick="resetBoard()">Reset Game
+    </button>
+    </body>
+</html>
