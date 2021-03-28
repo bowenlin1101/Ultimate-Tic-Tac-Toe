@@ -22,7 +22,6 @@ document.addEventListener('click', function(e) {
 function setBoardState(){ 
     boardState = [[["available", "available", "available"],["available", "available", "availabe"],["available", "available", "availabe"]],[["available", "available", "availabe"],["available", "available", "availabe"],["available", "available", "availabe"]],[["available", "available", "availabe"],["available", "available", "availabe"],["available", "available", "availabe"]],[["available", "available", "availabe"],["available", "available", "availabe"],["available", "available", "availabe"]],[["available", "available", "availabe"],["available", "available", "availabe"],["available", "available", "availabe"]],[["available", "available", "availabe"],["available", "available", "availabe"],["available", "available", "availabe"]],[["available", "available", "availabe"],["available", "available", "availabe"],["available", "available", "availabe"]],[["available", "available", "availabe"],["available", "available", "availabe"],["available", "available", "availabe"]],[["available", "available", "availabe"],["available", "available", "availabe"],["available", "available", "availabe"]]];
     bigBoardState = [["available", "available", "available"],["available", "available", "availabe"],["available", "available", "availabe"]];
-    console.log(boardState);
 }
 
 function setBigBoard(){
@@ -85,9 +84,9 @@ function setX(e){
             turnIndicatorBox.classList.remove("red")
         }
         boardState[BigSquareId][BigSquareRow][BigSquareCol] = "X";
-        checkSmallWin(BigSquareId);
+        checkSmallWin(BigSquareId,"X");
         addAvailability(BigSquareRow,BigSquareCol);
-        checkBigWin();
+        checkBigWin("X");
     }
 }
 
@@ -113,9 +112,9 @@ function setO(e){
             turnIndicatorBox.classList.remove("red")
         }
         boardState[BigSquareId][BigSquareRow][BigSquareCol] = "O";
-        checkSmallWin(BigSquareId);
+        checkSmallWin(BigSquareId,"O");
         addAvailability(BigSquareRow,BigSquareCol);
-        checkBigWin();
+        checkBigWin("O");
     }
 }
 
@@ -145,7 +144,6 @@ function addAvailability(row,col){
 
 function removeAvailability(targetClass){  
     if (targetClass == "*"){
-        console.log("bruh2")
         childSquares = document.getElementsByClassName("child-square");
         signSquares = document.getElementsByClassName("small-sign");
         for (i of childSquares){
@@ -153,7 +151,6 @@ function removeAvailability(targetClass){
                 i.classList.remove("available");
             }
         }
-
         for (i of signSquares){
             if (i.classList.contains("available")){
                 i.classList.remove("available");
@@ -169,63 +166,39 @@ function removeAvailability(targetClass){
     }
 }
 
-function checkSmallWin(square){
+function checkSmallWin(square,player){
     squares = boardState[square];
     console.log(squares);
     //Checks for horizontals
-    if ((squares[0][0]=="X"&&squares[0][1]=="X"&&squares[0][2]=="X")||(squares[1][0]=="X"&&squares[1][1]=="X"&&squares[1][2]=="X")||(squares[2][0]=="X"&&squares[2][1]=="X"&&squares[2][2]=="X")
+    if ((squares[0][0]==player&&squares[0][1]==player&&squares[0][2]==player)||(squares[1][0]==player&&squares[1][1]==player&&squares[1][2]==player)||(squares[2][0]==player&&squares[2][1]==player&&squares[2][2]==player)
     //Checks for verticals
-    ||(squares[0][0]=="X"&&squares[1][0]=="X"&&squares[2][0]=="X")||(squares[0][1]=="X"&&squares[1][1]=="X"&&squares[2][1]=="X")||(squares[0][2]=="X"&&squares[1][2]=="X"&&squares[2][2]=="X")
+    ||(squares[0][0]==player&&squares[1][0]==player&&squares[2][0]==player)||(squares[0][1]==player&&squares[1][1]==player&&squares[2][1]==player)||(squares[0][2]==player&&squares[1][2]==player&&squares[2][2]==player)
     //Checks for diagonals
-    ||(squares[0][0]=="X"&&squares[1][1]=="X"&&squares[2][2]=="X")||(squares[0][2]=="X"&&squares[1][1]=="X"&&squares[2][0]=="X")
+    ||(squares[0][0]==player&&squares[1][1]==player&&squares[2][2]==player)||(squares[0][2]==player&&squares[1][1]==player&&squares[2][0]==player)
     ){
         closedRowCol = convertSquaretoRowCol(square)
         closedSquare = document.getElementById("brow-"+closedRowCol[0]+"col-"+closedRowCol[1]);
         for (i of closedSquare.children){
             for(j of i.children){
-                j.classList.add("XWon");
+                j.classList.add(player+"Won");
             }
         }
-        bigBoardState[closedRowCol[0]][closedRowCol[1]] = "X";
-    } else if((squares[0][0]=="O"&&squares[0][1]=="O"&&squares[0][2]=="O")||(squares[1][0]=="O"&&squares[1][1]=="O"&&squares[1][2]=="O")||(squares[2][0]=="O"&&squares[2][1]=="O"&&squares[2][2]=="O")
-    //Checks for verticals
-    ||(squares[0][0]=="O"&&squares[1][0]=="O"&&squares[2][0]=="O")||(squares[0][1]=="O"&&squares[1][1]=="O"&&squares[2][1]=="O")||(squares[0][2]=="O"&&squares[1][2]=="O"&&squares[2][2]=="O")
-    //Checks for diagonals
-    ||(squares[0][0]=="O"&&squares[1][1]=="O"&&squares[2][2]=="O")||(squares[0][2]=="O"&&squares[1][1]=="O"&&squares[2][0]=="O")){
-        closedRowCol = convertSquaretoRowCol(square)
-        closedSquare = document.getElementById("brow-"+closedRowCol[0]+"col-"+closedRowCol[1]);
-        for (i of closedSquare.children){
-            for(j of i.children){
-                j.classList.add("OWon");
-            }
-        }
-        bigBoardState[closedRowCol[0]][closedRowCol[1]] = "O";
-    }
+        bigBoardState[closedRowCol[0]][closedRowCol[1]] = player;
+    } 
 }
 
-function checkBigWin(){
+function checkBigWin(player){
     //Checks for horizontals
-    if ((bigBoardState[0][0]=="X"&&bigBoardState[0][1]=="X"&&bigBoardState[0][2]=="X")||(bigBoardState[1][0]=="X"&&bigBoardState[1][1]=="X"&&bigBoardState[1][2]=="X")||(bigBoardState[2][0]=="X"&&bigBoardState[2][1]=="X"&&bigBoardState[2][2]=="X")
+    if ((bigBoardState[0][0]==player&&bigBoardState[0][1]==player&&bigBoardState[0][2]==player)||(bigBoardState[1][0]==player&&bigBoardState[1][1]==player&&bigBoardState[1][2]==player)||(bigBoardState[2][0]==player&&bigBoardState[2][1]==player&&bigBoardState[2][2]==player)
     //Checks for verticals
-    ||(bigBoardState[0][0]=="X"&&bigBoardState[1][0]=="X"&&bigBoardState[2][0]=="X")||(bigBoardState[0][1]=="X"&&bigBoardState[1][1]=="X"&&bigBoardState[2][1]=="X")||(bigBoardState[0][2]=="X"&&bigBoardState[1][2]=="X"&&bigBoardState[2][2]=="X")
+    ||(bigBoardState[0][0]==player&&bigBoardState[1][0]==player&&bigBoardState[2][0]==player)||(bigBoardState[0][1]==player&&bigBoardState[1][1]==player&&bigBoardState[2][1]==player)||(bigBoardState[0][2]==player&&bigBoardState[1][2]==player&&bigBoardState[2][2]==player)
     //Checks for diagonals
-    ||(bigBoardState[0][0]=="X"&&bigBoardState[1][1]=="X"&&bigBoardState[2][2]=="X")||(bigBoardState[0][2]=="X"&&bigBoardState[1][1]=="X"&&bigBoardState[2][0]=="X")
+    ||(bigBoardState[0][0]==player&&bigBoardState[1][1]==player&&bigBoardState[2][2]==player)||(bigBoardState[0][2]==player&&bigBoardState[1][1]==player&&bigBoardState[2][0]==player)
     ){
         removeAvailability("*");
-        window.alert("X Won!!!")
+        window.alert(player + " Won!!!")
         document.getElementById("reset-button").style.display = "inline-block";
     } 
-    //Checks for horizontals
-    else if ((bigBoardState[0][0]=="O"&&bigBoardState[0][1]=="O"&&bigBoardState[0][2]=="O")||(bigBoardState[1][0]=="O"&&bigBoardState[1][1]=="O"&&bigBoardState[1][2]=="O")||(bigBoardState[2][0]=="O"&&bigBoardState[2][1]=="O"&&bigBoardState[2][2]=="O")
-    //Checks for verticals
-    ||(bigBoardState[0][0]=="O"&&bigBoardState[1][0]=="O"&&bigBoardState[2][0]=="O")||(bigBoardState[0][1]=="O"&&bigBoardState[1][1]=="O"&&bigBoardState[2][1]=="O")||(bigBoardState[0][2]=="O"&&bigBoardState[1][2]=="O"&&bigBoardState[2][2]=="O")
-    //Checks for diagonals
-    ||(bigBoardState[0][0]=="O"&&bigBoardState[1][1]=="O"&&bigBoardState[2][2]=="O")||(bigBoardState[0][2]=="O"&&bigBoardState[1][1]=="O"&&bigBoardState[2][0]=="O")
-    ){
-        removeAvailability("*");
-        window.alert("O Won!!!")
-        document.getElementById("reset-button").style.display = "inline-block";
-    }
 }
 
 function convertSquaretoRowCol(square){
